@@ -10,7 +10,7 @@ from gym.spaces.box import Box
 
 from gym_airsim.envs.myAirSimClient import *
         
-from AirSimClient import *
+from airsim import *
 
 logger = logging.getLogger(__name__)
 
@@ -81,7 +81,7 @@ class AirSimEnv(gym.Env):
 
         collided = airgym.take_action(action)
         
-        now = airgym.getPosition()
+        now = airgym.simGetGroundTruthKinematics().position
         track = airgym.goal_direction(self.goal, now) 
 
         if collided == True:
@@ -143,7 +143,7 @@ class AirSimEnv(gym.Env):
         
         print("")
         
-        now = airgym.getPosition()
+        now = airgym.simGetGroundTruthKinematics().position
         track = airgym.goal_direction(self.goal, now)
         self.state = airgym.getScreenDepthVis(track)
         
